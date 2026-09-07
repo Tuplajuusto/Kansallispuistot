@@ -31,18 +31,31 @@ Last updated: 2026-09-06
       MML), privacy policy link
 - [x] Status bar / nav bar color matched to app theme
 - [x] "Show more" per-park section: routes, shelters, difficulty, accessibility
-      (tiered badge), GPX-availability note, "info last checked" date
+      (tiered badge: accessible / partly accessible / none), GPX-availability
+      note, "info last checked" date
+- [x] "My Journey" stats card — area explored, regions touched, photo count,
+      note count, 3 most recently visited parks with dates. Sits at the top
+      of the Achievements screen.
+- [x] Shareable progress card — generates a real PNG (Canvas-drawn, same
+      font/style as the feature graphic) showing live "X/41" + progress bar;
+      opens native Android share sheet if supported, downloads otherwise
 
 ## 🔧 In progress / partial
 
-- [ ] Extended park content ("Show more"): **8 of 41 done**
+- [ ] Extended park content ("Show more"): **12 of 41 done**
       (Nuuksio, Oulanka, Koli, Repovesi, Pallas-Yllästunturi, Urho Kekkonen,
-      Seitseminen, Helvetinjärvi) — 33 remaining, ongoing batch by batch
-  - [ ] Next batch suggestion: Riisitunturi, Syöte, Linnansaari, Kolovesi
+      Seitseminen, Helvetinjärvi, Riisitunturi, Syöte, Linnansaari, Kolovesi)
+      — 29 remaining, ongoing batch by batch
 - [ ] luontoon.fi official links: **17 of 41 individually verified**
       (all compound/hyphenated names — highest risk of pattern breaking).
       1 real bug already found + fixed (Puurijärvi-Isosuo). 24 remaining are
       simple single-word names, lower risk but unverified.
+- [ ] **Park coordinates — spot-check in progress.** Päijänne was found to be
+      ~40 km off (and its region was wrong too — fixed both). Found via
+      visually comparing against the real MML terrain outlines, which is a
+      genuinely good way to keep catching these — keep reporting any park
+      that looks visually wrong on the terrain map. The other 40 haven't
+      been systematically re-verified.
 - [ ] Play Store closed testing — running (day 7+ as of last check)
 - [ ] MapTiler account: commercial-use terms + API key domain restriction —
       needs confirming in your MapTiler dashboard
@@ -53,8 +66,9 @@ Last updated: 2026-09-06
       Ministry of Interior + Poliisihallitus sources: private individuals
       cannot get a money-collection permit for themselves under
       Rahankeräyslaki, even for something framed as a "tip" — permits are
-      reserved for non-profits. **Fix**: sell an actual feature/product
-      instead (this makes it ordinary commerce, not a money collection):
+      reserved for non-profits.
+      **Fix**: sell an actual feature/product instead (this makes it
+      ordinary commerce, not a money collection):
       - Idea: "Supporter" one-time purchase unlocking a cosmetic badge
       - Idea: premium map style / app theme
       - Idea: paid offline map pack bundle
@@ -69,19 +83,19 @@ Last updated: 2026-09-06
       real capabilities doc, but never confirmed working from inside the
       actual app (only confirmed via browser login prompt) — check this
       on next device test
-- [ ] Language switcher on very narrow screens (fixed once for S22-class
-      widths — recheck if any other device reports it cutting off again)
+- [ ] Share button: depends on `navigator.share`/`canShare` with file
+      support, which varies by Android WebView version — confirm it opens
+      the real native share sheet, not just falling straight to download
+- [x] ~~Language switcher on very narrow screens~~ — fixed (clamp-based
+      title sizing + wrap fallback), confirmed working
 
 ## 📋 Backlog — cheap, high value (good next picks)
 
 - [ ] Navigate button — one-tap link to Google/Apple Maps for directions
 - [ ] Map filters — visited / unvisited / nearby / by region chips
-- [ ] "My journey" stats view — km² explored, most-visited region, yearly recap
-- [ ] Share progress as an image ("12/41 parks 🌲") — free organic marketing
 - [ ] More hiking-behavior achievements (e.g. shelter-based, winter-specific)
-- [ ] Social share card generator on logging a visit (photo + badge + "X/41
-      completed" overlay, Instagram-Story-shaped) — bigger version of the
-      plain share-progress idea above
+- [ ] Richer share card on logging a single visit (photo + badge + park name
+      overlay, not just the overall progress card) — Instagram-Story-shaped
 - [ ] Dynamic seasonal challenge UI (e.g. "Ruska Challenge" — visit Lapland
       parks in September) — reuses existing visit-date + achievement system
 
@@ -100,8 +114,6 @@ Last updated: 2026-09-06
       tile bounding box at set zoom levels, instead of relying on the user
       having already panned over the area. Real value for spotty-signal
       parks (Lemmenjoki, UKK, etc.)
-- [ ] Tiered accessibility system to match luontoon.fi's actual grading
-      (already have a basic 3-tier version; luontoon.fi's is more granular)
 
 ## 🗺️ Backlog — long-term / separate projects
 
