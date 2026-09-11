@@ -4,7 +4,7 @@ How to use this file: check boxes as `[x]` when done, move items between
 sections as things change, delete or add lines freely. This is yours to edit
 directly in VS Code — nothing here is generated automatically by the app.
 
-Last updated: 2026-09-06
+Last updated: 2026-09-11
 
 ---
 
@@ -13,7 +13,7 @@ Last updated: 2026-09-06
 - [x] All 41 parks: name, region, blurb, badge, coordinates, official link
 - [x] Real interactive map (Leaflet) with MapTiler standard + MML terrain layers
 - [x] Location: nearest-park sort, native permission flow, in-app pre-permission modal
-- [x] Fullscreen map view
+- [x] Fullscreen map view, now sized at 62vh with tightened surrounding chrome
 - [x] Visit log: date, personal note, one photo per visit (compressed client-side)
 - [x] Wishlist ("want to visit"), independent of visited status — shown in list + map
 - [x] Achievements: 5 milestones, 8 motif-based, Four Seasons, Photographer, Planner,
@@ -23,51 +23,77 @@ Last updated: 2026-09-06
       real per-photo attribution (photographer + license)
 - [x] Offline caching: map tiles (LRU-capped) + photos, manual "clear cache" option
 - [x] Android back button correctly threaded through every screen (incl. lightbox,
-      fullscreen map, modals)
+      fullscreen map, modals, and now Home-as-root navigation)
 - [x] Full FI / SV / EN localization (Finnish default)
 - [x] Custom app icon, 19 unique original badge motifs (not Metsähallitus's real
       trademarked emblems — deliberate IP-safe design choice)
 - [x] In-app Info screen: source credits (MapTiler, OSM, Wikimedia, Metsähallitus,
-      MML), privacy policy link
-- [x] Status bar / nav bar color matched to app theme
+      MML), privacy policy link, real feedback email locked in
+      (kansallispuistot.app@gmail.com)
+- [x] "Report a mistake" — per-park and general feedback links, mailto-based
+- [x] Real dark/light theme system — 18 CSS custom properties, both palettes,
+      instant toggle in Info screen, saved preference, defaults to system
+      setting on first launch. Status bar AND native navigation bar both
+      follow the active theme (nav bar needs a plugin — see setup note
+      below). Shareable progress card also renders in the correct theme now.
+- [x] Full navigation redesign — bottom tab bar (Home / Explore / Map),
+      replacing the old top segmented control and the old Parks/Map/Achievements
+      split. Achievements is reached via a link from Home, not a permanent tab.
+      Each screen has its own contextual header instead of one fixed block with
+      a permanently-visible progress bar.
+- [x] New Home screen — real data, not placeholders: circular progress ring,
+      regions/photos/wishlist stats, latest-visit card (shows your own photo if
+      you added one for that visit), achievements preview strip, Everyman's
+      Right tip card
+- [x] Explore list redesigned as medium photo cards — badge centered against
+      the text block, filter pills (All/Unvisited/Wishlist/4 region groups) with
+      real filtering logic, and cards show your own uploaded photo when you have
+      one for that park, falling back to a decorative gradient otherwise
 - [x] "Show more" per-park section: routes, shelters, difficulty, accessibility
       (tiered badge: accessible / partly accessible / none), GPX-availability
       note, "info last checked" date
-- [x] "My Journey" stats card — area explored, regions touched, photo count,
-      note count, 3 most recently visited parks with dates. Sits at the top
-      of the Achievements screen.
-- [x] Shareable progress card — generates a real PNG (Canvas-drawn, same
-      font/style as the feature graphic) showing live "X/41" + progress bar;
-      opens native Android share sheet if supported, downloads otherwise
 
 ## 🔧 In progress / partial
 
-- [ ] Extended park content ("Show more"): **12 of 41 done**
+- [ ] Extended park content ("Show more"): 16 of 41 done
       (Nuuksio, Oulanka, Koli, Repovesi, Pallas-Yllästunturi, Urho Kekkonen,
-      Seitseminen, Helvetinjärvi, Riisitunturi, Syöte, Linnansaari, Kolovesi)
-      — 29 remaining, ongoing batch by batch
-- [ ] luontoon.fi official links: **17 of 41 individually verified**
+      Seitseminen, Helvetinjärvi, Riisitunturi, Syöte, Linnansaari, Kolovesi,
+      Isojärvi, Leivonmäki, Rokua, Teijo) — 25 remaining, ongoing batch by batch
+- [ ] luontoon.fi official links: 17 of 41 individually verified
       (all compound/hyphenated names — highest risk of pattern breaking).
       1 real bug already found + fixed (Puurijärvi-Isosuo). 24 remaining are
       simple single-word names, lower risk but unverified.
-- [ ] **Park coordinates — spot-check in progress.** Päijänne was found to be
+- [ ] Park coordinates — spot-check in progress. Päijänne was found to be
       ~40 km off (and its region was wrong too — fixed both). Found via
       visually comparing against the real MML terrain outlines, which is a
       genuinely good way to keep catching these — keep reporting any park
       that looks visually wrong on the terrain map. The other 40 haven't
       been systematically re-verified.
-- [ ] Play Store closed testing — running (day 7+ as of last check)
+- [ ] Region-group classification for the filter pills (Lapland/Lakeland/
+      North/South) — built and working (real bug already found + fixed: it
+      was checking the wrong language's region text), but the grouping
+      itself is a reasonable first pass, not an authoritative Finnish
+      administrative classification. Worth a second look eventually.
+- [ ] Play Store closed testing — running
 - [ ] MapTiler account: commercial-use terms + API key domain restriction —
       needs confirming in your MapTiler dashboard
 
+## 🔌 Setup needed for latest features
+
+- [ ] Install @capacitor-community/navigation-bar for the native Android
+      navigation bar to follow the theme toggle (the status bar already does
+      this via the core plugin — the nav bar needs this separate one):
+      npm install @capacitor-community/navigation-bar
+      npx cap sync android
+
 ## ⚠️ Legal / compliance — read before acting
 
-- [ ] **Monetization must NOT be a bare "tip jar."** Verified against Finnish
+- [ ] Monetization must NOT be a bare "tip jar." Verified against Finnish
       Ministry of Interior + Poliisihallitus sources: private individuals
       cannot get a money-collection permit for themselves under
       Rahankeräyslaki, even for something framed as a "tip" — permits are
       reserved for non-profits.
-      **Fix**: sell an actual feature/product instead (this makes it
+      Fix: sell an actual feature/product instead (this makes it
       ordinary commerce, not a money collection):
       - Idea: "Supporter" one-time purchase unlocking a cosmetic badge
       - Idea: premium map style / app theme
@@ -79,20 +105,32 @@ Last updated: 2026-09-06
 
 ## 🐛 Known issues / needs on-device verification
 
-- [ ] MML terrain layer: URL format + Basic Auth built correctly against the
-      real capabilities doc, but never confirmed working from inside the
-      actual app (only confirmed via browser login prompt) — check this
-      on next device test
-- [ ] Share button: depends on `navigator.share`/`canShare` with file
-      support, which varies by Android WebView version — confirm it opens
-      the real native share sheet, not just falling straight to download
-- [x] ~~Language switcher on very narrow screens~~ — fixed (clamp-based
-      title sizing + wrap fallback), confirmed working
+- [x] MML terrain layer — confirmed working on-device
+- [x] Share button — confirmed working
+- [x] Language switcher on very narrow screens — fixed, confirmed working
+- [x] Fullscreen map button too transparent — fixed (was 90% opacity +
+      blur, now fully opaque)
+- [x] Map preview popup too transparent, text barely visible in dark mode
+      — fixed, same root cause as the button above (95% opacity + blur letting
+      busy map tiles wash out the text)
+- [x] Park name unreadable in light theme — real bug: the hero photo
+      overlay title got swept into the systematic light-theme color
+      conversion and started following the page theme instead of staying a
+      constant light color, even though it sits on a permanently-dark photo.
+      Fixed.
+- [ ] New theme system needs a real walkthrough — this was the single
+      biggest mechanical change made to the app (146 individual color
+      classes converted to CSS variables across the whole file). Validated
+      structurally (parser, brace/paren balance) but that doesn't prove
+      every screen looks right when actually toggled — walk through list,
+      map, park detail, achievements, and all modals in both themes
+- [ ] Navigation bar color sync — built, but untestable from here since it
+      depends on the plugin install above; confirm it actually works once
+      installed
 
 ## 📋 Backlog — cheap, high value (good next picks)
 
 - [ ] Navigate button — one-tap link to Google/Apple Maps for directions
-- [ ] Map filters — visited / unvisited / nearby / by region chips
 - [ ] More hiking-behavior achievements (e.g. shelter-based, winter-specific)
 - [ ] Richer share card on logging a single visit (photo + badge + park name
       overlay, not just the overall progress card) — Instagram-Story-shaped
@@ -102,11 +140,13 @@ Last updated: 2026-09-06
 ## 📋 Backlog — bigger, real work, sequence deliberately
 
 - [ ] Multiple visits per park (Nuuksio 2024, 2025, ... each with own
-      date/note/photo) — **on hold, paired with:**
-- [ ] Multiple photos per visit — **on hold**, same reason (both need a real
+      date/note/photo) — on hold, paired with:
+- [ ] Multiple photos per visit — on hold, same reason (both need a real
       data-model change: visit history array instead of one slot per park)
 - [ ] Photo storage upgrade (move off current storage toward IndexedDB or
-      native Filesystem) — becomes more urgent once the above two ship
+      native Filesystem) — becomes more urgent once the above two ship, and
+      now that photos show up on Explore cards + Home too (more places
+      touching the same stored images)
 - [ ] Structured route objects (name/length/difficulty as real fields, not
       one text paragraph) — deferred until something actually needs to query
       routes individually (e.g. drawing one on the map, filtering by length)
