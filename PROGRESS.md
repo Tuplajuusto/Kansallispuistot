@@ -266,6 +266,12 @@ Last updated: 2026-09-11
       "multiple visits per park" backlog item — worth designing together
       once that data-model change actually happens, rather than bolting
       fields on piecemeal
+- [ ] Once multiple visits per park exists, add a "total visit count" stat
+      to the Home journey card (e.g. "23 visits" vs. "15 parks") — a
+      meaningfully different number once one park can have several visits
+      logged against it. Small addition, but only makes sense after the
+      data model actually supports multiple visits — noted here so it's
+      not forgotten when that work happens
 - [ ] FMI (Finnish Meteorological Institute) open API — live weather +
       forest fire warnings. **Worth noting a real tension here**: a
       different review explicitly warned against scope-creeping into "a
