@@ -108,7 +108,7 @@ Last updated: 2026-09-11
 
 ## 🔌 Setup needed for latest features
 
-- [ ] Install @capgo/capacitor-navigation-bar for the native Android
+- [x] Install @capgo/capacitor-navigation-bar for the native Android
       navigation bar to follow the theme toggle (the status bar already does
       this via the core plugin — the nav bar needs this separate one).
       Note: the original package name given (@capacitor-community/navigation-bar)
