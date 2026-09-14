@@ -70,19 +70,44 @@ Last updated: 2026-09-11
       park directly
 - [x] "Käydyt" (Visited) filter pill on Explore, plus a direct link from
       the Home journey card to jump straight there with it pre-applied
+- [x] **Extended park content ("Show more"): 41 of 41 — every park done.**
+      Real routes, shelters, difficulty, and a tiered accessibility rating
+      for all 41, researched from actual sources (luontoon.fi, official
+      park pages, trip reports) rather than filler text. The last 9 were
+      the trickiest batch — mostly boat-only marine/archipelago parks
+      (Archipelago Sea, Bothnian Bay, Bothnian Sea, Eastern Gulf, Ekenäs)
+      that genuinely don't have a mainland trail network the way land
+      parks do, so their content honestly reflects that (how to get there
+      by boat/kayak, island-only trails) rather than forcing them into the
+      same template as everywhere else
 
 ## 🔧 In progress / partial
 
-- [ ] Extended park content ("Show more"): 24 of 41 done
-      (Nuuksio, Oulanka, Koli, Repovesi, Pallas-Yllästunturi, Urho Kekkonen,
-      Seitseminen, Helvetinjärvi, Riisitunturi, Syöte, Linnansaari, Kolovesi,
-      Isojärvi, Leivonmäki, Rokua, Teijo, Hossa, Lemmenjoki, Pyhä-Luosto,
-      Salla, Torronsuo, Liesjärvi, Kurjenrahka, Valkmusa) — 17 remaining,
-      ongoing batch by batch — past the halfway point now
-- [ ] luontoon.fi official links: 17 of 41 individually verified
-      (all compound/hyphenated names — highest risk of pattern breaking).
-      1 real bug already found + fixed (Puurijärvi-Isosuo). 24 remaining are
-      simple single-word names, lower risk but unverified.
+- [x] **Finnish luontoon.fi links: 41 of 41 — every park now has an
+      explicit Finnish slug.** This was a real bug, not just incomplete
+      coverage: any park without an override silently fell back to the
+      *English* page even when the app was set to Finnish. Fixed the root
+      cause too — the URL function no longer has a path that lets Finnish
+      fall through to English at all. Confidence: most entries directly
+      confirmed (Finnish Wikipedia's own reference list, which cites
+      Metsähallitus by name for each park, plus a few live luontoon.fi
+      URLs seen directly); the remaining handful (Hiidenportti, Hossa,
+      Patvinsuo, Tiilikkajärvi, Torronsuo, Valkmusa) are grammar-derived —
+      standard Finnish genitive inflection, a pattern with zero exceptions
+      across every other park checked, but not individually re-verified
+      against a live page one by one.
+- [ ] **Swedish luontoon.fi links: 24 of 41 now covered** (was much lower
+      before this pass). The remaining 17 still fall back to English for
+      Swedish users specifically — same original gap, just narrower now.
+      Most of the 24 are pattern-derived from one directly-confirmed
+      example (Hossa: "Hossa nationalpark" — untranslated Finnish proper
+      noun + the Swedish generic word), which is a reasonably safe pattern
+      for single-word names but genuinely unverified per park. Worth a
+      dedicated Swedish-specific verification round later — lower
+      priority than Finnish since it's a smaller audience, but still a
+      real gap while it lasts.
+- [ ] English luontoon.fi links: 17 of 41 individually verified — same
+      status as before this round, not the focus this time
 - [ ] Park coordinates — spot-check in progress. Päijänne was found to be
       ~40 km off (and its region was wrong too — fixed both). Found via
       visually comparing against the real MML terrain outlines, which is a
@@ -108,7 +133,7 @@ Last updated: 2026-09-11
 
 ## 🔌 Setup needed for latest features
 
-- [x] Install @capgo/capacitor-navigation-bar for the native Android
+- [ ] Install @capgo/capacitor-navigation-bar for the native Android
       navigation bar to follow the theme toggle (the status bar already does
       this via the core plugin — the nav bar needs this separate one).
       Note: the original package name given (@capacitor-community/navigation-bar)
@@ -272,13 +297,38 @@ Last updated: 2026-09-11
       logged against it. Small addition, but only makes sense after the
       data model actually supports multiple visits — noted here so it's
       not forgotten when that work happens
-- [ ] FMI (Finnish Meteorological Institute) open API — live weather +
-      forest fire warnings. **Worth noting a real tension here**: a
-      different review explicitly warned against scope-creeping into "a
-      weather app." A lightweight per-park snippet (today's forecast, a
-      fire-warning badge if active) is a different thing from a full
-      weather feature and seems like the reasonable middle ground, but
-      this deserves an actual decision, not just adding it to the pile
+- [ ] **FMI forest fire warning badge — decided: yes, worth building, scope
+      narrowed to fire warnings specifically, not full weather.** You
+      confirmed this directly — it's exactly the kind of thing people
+      forget to check before a trip, and that's the real value, not a
+      weather forecast (which the "don't become a weather app" caution
+      still applies to).
+      **What I've actually verified** (not just assumed):
+      - FMI's open data API is real, free, and needs no registration —
+        confirmed directly on ilmatieteenlaitos.fi, contradicting an older
+        third-party doc that claimed an API key was required
+      - Metsäpalovaroitus (forest fire warning) is a real, official FMI
+        product with its own page — this isn't a guess, it exists
+      - **Not yet confirmed**: weather *warnings* (which fire warnings are
+        a type of) are explicitly served from a *separate* interface from
+        the general WFS data API — the source says so directly but I
+        haven't found that specific endpoint's documentation yet
+      - The main API returns WFS/GML (XML), not simple JSON — parsing
+        that client-side in the app is more work than a typical REST API
+        would be, worth knowing before scoping the build
+      **Next step before building the real API version**: find the actual
+      warnings-specific endpoint and confirm its response format, rather
+      than starting to build against the general forecast API and hoping
+      fire warnings work the same way
+      **Simple fallback, genuinely worth considering as the actual first
+      version**: skip the API entirely — a plain reminder card (Home or
+      the trip-tips section) with a line like "Check current fire warnings
+      before you go" linking straight to
+      ilmatieteenlaitos.fi/metsapalovaroitukset. No parsing, no unknown
+      endpoint, no network-failure handling to design around, delivers
+      the actual behavior change (remembering to check) with a fraction
+      of the effort. The live-data version is a nicer upgrade later, not
+      a prerequisite for getting real value now
 - [ ] Multi-attribute compound filters on Explore (e.g. "accessible AND
       wishlist AND Lapland" at once) — builds on filters that already exist
       individually, just not combinable yet
