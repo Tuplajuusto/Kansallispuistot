@@ -239,7 +239,7 @@ Last updated: 2026-09-11
       conversion and started following the page theme instead of staying a
       constant light color, even though it sits on a permanently-dark photo.
       Fixed.
-- [ ] New theme system needs a real walkthrough — this was the single
+- [x] New theme system needs a real walkthrough — this was the single
       biggest mechanical change made to the app (146 individual color
       classes converted to CSS variables across the whole file). Validated
       structurally (parser, brace/paren balance) but that doesn't prove
@@ -257,7 +257,7 @@ Last updated: 2026-09-11
 ## 📋 Backlog — cheap, high value (good next picks)
 
 - [ ] Navigate button — one-tap link to Google/Apple Maps for directions
-- [ ] More hiking-behavior achievements (e.g. shelter-based, winter-specific)
+- [x] More hiking-behavior achievements (e.g. shelter-based, winter-specific)
 - [ ] Richer share card on logging a single visit (photo + badge + park name
       overlay, not just the overall progress card) — Instagram-Story-shaped
 - [ ] Dynamic seasonal challenge UI (e.g. "Ruska Challenge" — visit Lapland
