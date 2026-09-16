@@ -120,16 +120,60 @@ Last updated: 2026-09-11
       itself is a reasonable first pass, not an authoritative Finnish
       administrative classification. Worth a second look eventually.
 - [x] Play Store closed testing — completed, app submitted for production review
-- [ ] MapTiler account: commercial-use terms + API key domain restriction —
-      needs confirming in your MapTiler dashboard
+- [ ] **MapTiler licensing — decided: switch to MML instead, not upgrade
+      MapTiler.** Since this app isn't trying to be a standalone map/nav
+      product — the map is a feature in service of the park-tracking
+      purpose, not the product itself — the simplest fix wins over the
+      "nicest" one. Plan: replace MapTiler's "Vakio" (Standard) style with
+      MML's `taustakartta` layer, using the *exact same* already-working
+      MML integration (same open endpoint, same auth, same URL pattern as
+      the existing `maastokartta` terrain layer — just a different
+      `layer=` value). If this works as expected, **MapTiler can be
+      dropped entirely** — both map styles would run on MML, CC BY 4.0
+      licensed, no revenue caps, no employee thresholds, nothing new to
+      integrate. Not yet built — next concrete step is trying the real
+      `taustakartta` tile URL to confirm it looks acceptable as the
+      standard style, then wiring it in.
+      Still need the API key domain/package restriction set on whichever
+      keys remain in use either way.
 - [ ] MML API key — same category of check as MapTiler above, not yet done
       for this one specifically. Client-side API keys are inherently visible
       in any frontend app's bundle (there's no way to truly "hide" a key
       without a backend proxy) — that's normal for keys meant for this,
       but only safe if the provider's dashboard has real usage
       restrictions (domain/package lock) configured on their end. Worth
-      confirming MML's terms explicitly allow client-side use the way
-      MapTiler's do.
+      confirming MML's terms explicitly allow client-side use, and
+      separately confirming what license tier the app is actually on.
+      Also worth confirming `taustakartta` and the other open-endpoint
+      layers sit under the same free/open tier as `maastokartta` already
+      does, not the separate paid "sopimuspalvelu" contract service.
+- [x] **Wikimedia Commons photos — checked, genuinely clean.** Commons'
+      own policy states directly: "All media files on Wikimedia Commons
+      can be used by anyone, including commercially." Commons rejects
+      non-commercial-only licenses and fair-use uploads at the point of
+      upload, so anything actually hosted there is already cleared. Only
+      real obligation is attribution (photographer + license), which the
+      app already does automatically per photo. No action needed.
+- [x] **LIPAS data license — confirmed, genuinely good news.** Real terms
+      text, provided directly: CC Nimeä 4.0 Kansainvälinen (CC BY 4.0),
+      explicitly covering private, public, commercial, and non-commercial
+      use. Only requirement is attribution, with a suggested citation
+      format ("Jyväskylän yliopisto, Lipas Liikuntapaikat.fi") and noting
+      the sample date, since the database updates continuously. Same
+      clean license family as MML and Wikimedia — no action needed until
+      the LIPAS/GPX integration itself actually gets built (still a
+      deferred, long-term item), but the legal groundwork is now settled.
+- [ ] **NationalPark font — license confirmed clean (SIL OFL 1.1), one
+      small thing still to actually do.** Found the license file sitting
+      right alongside the font itself: SIL Open Font License 1.1,
+      copyright 2025 The National Park Project Authors. Explicitly
+      permits embedding in commercial software free of charge — only
+      restriction is not selling the font by itself, which doesn't apply
+      here. Real remaining task: the license requires the copyright
+      notice stay reasonably accessible to users. Cheapest fix — add one
+      more line to the Info screen's existing credits list (already
+      credits MapTiler, OSM, Wikimedia, Metsähallitus, MML), same pattern
+      already established, just one more source added to it.
 
 ## 🔌 Setup needed for latest features
 
@@ -163,6 +207,24 @@ Last updated: 2026-09-11
       anytime, free→paid is NOT (already learned this one the hard way once)
 
 ## 🐛 Known issues / needs on-device verification
+
+- [ ] **MML tile-caching-specific terms** — the general MML open-data license
+      (CC BY 4.0) is confirmed, but a separate reviewer specifically flagged
+      verifying that *long-term local caching* of map tiles is covered the
+      same way as just using them live. Not yet checked as its own question.
+- [ ] **Error handling** — many empty `catch (e) {}` blocks throughout
+      (save, photo load/compress, tile load, share, achievement/visit save).
+      Keeps the UI quiet but makes real failures invisible to you and to
+      users. Worth at minimum: a short user-facing message on critical
+      failures, centralized dev logging, and privacy-respecting crash
+      reporting with consent for the production build. Not started — a
+      real, if unglamorous, piece of work.
+- [ ] **"Offline" wording honesty check** — confirm the current copy
+      describes what's actually true (previously-viewed map areas stay
+      available without a connection) rather than implying a full
+      pre-downloaded offline park package, which doesn't exist yet. Cheap
+      to fix once checked, just not yet checked directly against the
+      current strings.
 
 - [x] MML terrain layer — confirmed working on-device
 - [x] Share button — confirmed working
@@ -245,6 +307,33 @@ Last updated: 2026-09-11
       only revisit if live attribution turns out insufficient in practice
 
 ## 💡 Ideas mentioned but not yet decided on
+
+- [ ] **"Quick add trip" button on Home** — a shortcut for logging a visit
+      without navigating to that specific park's page first. Tap the
+      button, a popup opens with a park dropdown/search selector at the
+      top, then the same fields already used in a park's "Your visit"
+      section below it (date, note, photo, distance). Submitting writes
+      to the same `log` data everything else already uses — this is a
+      new entry point to existing functionality, not a new data model.
+      Real use case: logging a visit after getting home from a trip,
+      without hunting through Explore for the right park first. Not
+      scoped beyond this — needs a decision on exact placement on Home
+      (its own card? folded into an existing one?) and how the park
+      dropdown should behave with 41 options (searchable text input
+      matching Explore's search, most likely, rather than a plain
+      long dropdown list).
+
+- [ ] Maptoolkit.org's "Hiking" map style, for later — genuinely nice,
+      purpose-built for exactly this use case (contour lines, hillshading,
+      trail-friendly rendering), and worth a look again someday. Explicitly
+      deferred in favor of MML for now: switching to Maptoolkit means a
+      real migration (Leaflet vector-tile plugin, new license terms to
+      track, a "no offline tile generation" clause that needs clarifying
+      against the app's existing offline cache), while MML reuses
+      integration that already exists. Right call for now since this app
+      isn't trying to be a standalone map/navigation product — the map
+      serves the park-tracking purpose, it isn't the purpose. Revisit if
+      MML's `taustakartta` turns out to look or perform worse than hoped.
 
 - [ ] **Trip prep tips / packing checklists — now fully specced, ready to
       build.** Placement decided: a small teaser card on Home, same visual
