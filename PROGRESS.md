@@ -308,6 +308,30 @@ Last updated: 2026-09-11
 
 ## 💡 Ideas mentioned but not yet decided on
 
+- [ ] **All-visits summary/journal view** — a chronological list of every
+      logged visit across all parks, not just per-park. This is arguably
+      the actual point of the multiple-visits work already built, not a
+      separate feature — several outside reviews independently called out
+      a real trip journal as the single biggest thing missing, and this is
+      what turns the underlying data into something worth looking back on.
+      **Placement**: leaning against a new tab (too much weight for what
+      it is) — more natural reached from Home, e.g. the existing "Latest
+      visit" card gets a "See all visits →" link, mirroring how
+      achievements already work (preview strip → full view one tap away).
+      **Per-row content**: date first (it's the organizing principle),
+      park name, a small photo thumbnail when one exists, first line of
+      the note as a preview if there's room. Distance as a smaller
+      secondary detail.
+      **Natural pairing**: this is exactly where the existing "quick add
+      trip" idea (see below) would slot in — a "+" at the top of this
+      list, rather than only reachable by finding a specific park's page
+      first.
+      **Open question before building, not yet settled**: chronological
+      across *all* parks (a true "my whole trekking history") vs. a
+      per-park visit list shown as a list instead of a swipe — genuinely
+      different scope and different value, worth deciding deliberately
+      rather than defaulting to one.
+
 - [ ] **"Quick add trip" button on Home** — a shortcut for logging a visit
       without navigating to that specific park's page first. Tap the
       button, a popup opens with a park dropdown/search selector at the
