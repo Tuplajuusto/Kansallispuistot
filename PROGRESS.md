@@ -367,6 +367,12 @@ Last updated: 2026-09-11
       overlay, not just the overall progress card) — Instagram-Story-shaped
 - [ ] Dynamic seasonal challenge UI (e.g. "Ruska Challenge" — visit Lapland
       parks in September) — reuses existing visit-date + achievement system
+- [ ] Richer "trip" concept for each visit — named route taken, duration,
+      a personal 1–5 star rating, alongside the date/note/photo/distance
+      that already exist. Elaborates on (doesn't replace) the existing
+      "multiple visits per park" backlog item — worth designing together
+      once that data-model change actually happens, rather than bolting
+      fields on piecemeal
 
 ## 📋 Backlog — bigger, real work, sequence deliberately
 
@@ -555,12 +561,6 @@ Last updated: 2026-09-11
       restoring your data. Nice-to-have, lower priority than the plain
       JSON export since that one solves a real data-loss risk and this one
       is more decorative
-- [ ] Richer "trip" concept for each visit — named route taken, duration,
-      a personal 1–5 star rating, alongside the date/note/photo/distance
-      that already exist. Elaborates on (doesn't replace) the existing
-      "multiple visits per park" backlog item — worth designing together
-      once that data-model change actually happens, rather than bolting
-      fields on piecemeal
 - [ ] Multi-attribute compound filters on Explore (e.g. "accessible AND
       wishlist AND Lapland" at once) — builds on filters that already exist
       individually, just not combinable yet
