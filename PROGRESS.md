@@ -10,6 +10,70 @@ Last updated: 2026-09-11
 
 ## ✅ Done — core app
 
+- [x] **Multiple visits per park** — real data-model change, not just UI.
+      log[parkId] is now an array of visits (was one object). Swipeable
+      card in ParkDetail shows "Visit 3/15" with prev/next arrows and dot
+      indicators, "+ Add visit" appends a new entry, delete removes a
+      single visit (or routes through the same warned un-mark flow if
+      it's the last one). Migration runs automatically on existing data
+      and on importing older backup files. Achievement/stat calculations
+      (photo count, seasons, distance) correctly sum across all visits,
+      not just one per park. Home shows a "total visits" stat once it's
+      actually different from "parks visited."
+- [x] **Photo storage moved to IndexedDB** — photos no longer live as
+      base64 strings inside the size-limited log JSON. Real quota upgrade
+      that became necessary once multi-visit removed the old natural
+      ceiling (41 photos max, one per park) — an engaged user logging
+      many visits to a favorite park had no cap anymore. Write path,
+      migration, cleanup-on-delete, and export/import (which reconstructs
+      real photo bytes so backups stay portable across devices) all
+      updated together, plus all three photo-reading UI spots (ParkDetail,
+      Explore cards, Home's latest-visit card).
+- [x] **Collapsing header on ParkDetail** — hero photo compresses as you
+      scroll (160px → 68px), badge and title shrink and reposition rather
+      than disappearing. Real accessibility fix built into it: the back
+      button's text label collapses to icon-only first, specifically so
+      it can't visually collide with the badge once the header is short —
+      caught and fixed a genuine overlap risk, not just prettifying.
+      Same technique applied to Explore's header too (title/location-row/
+      filter-pills collapse down to just the search bar on scroll).
+- [x] **Fixed and confirmed on-device: header would visibly jitter on
+      scroll for unvisited parks specifically.** First attempt (an
+      epsilon guard filtering small scroll-position changes) reduced but
+      didn't eliminate it — confirmed insufficient by the user testing on
+      a real device. Real fix: replaced continuous scroll-position
+      tracking with hysteresis (collapse past 70px, expand again only
+      below 20px, on both ParkDetail's hero and Explore's header) — a
+      genuine dead zone between the two thresholds, not a guessed noise
+      threshold that happens to be small enough. Structurally can't
+      flicker near a boundary regardless of noise amplitude. Side
+      benefit: since the target now only changes at two infrequent,
+      well-separated moments instead of every scroll frame, real CSS
+      transitions could be brought back safely (removed earlier
+      specifically because they fought continuous tracking) — collapse/
+      expand now animates smoothly instead of snapping.
+- [x] Fixed: switching between Home/Explore/Map/Achievements kept
+      whatever scroll position the previous tab was left at, since all
+      four share one underlying scroll container. Now resets to top on
+      every tab switch.
+- [x] **Fixed and confirmed on-device: Share button needed a second tap
+      most of the time.** First attempt (wrapping the fallback modal's
+      state update in requestAnimationFrame) addressed a real but
+      secondary paint-timing issue — confirmed insufficient by the user
+      testing on a real device. Real cause: the button gave zero visual
+      feedback when tapped, and canvas rendering + font loading (first
+      use especially) takes a genuinely perceptible moment — with nothing
+      visibly happening, a second tap isn't user error, it's the expected
+      reaction, and with no guard against it that second tap could
+      trigger a real concurrent second run. Fixed with a proper
+      `isSharing` loading state: the button shows a spinner and disables
+      itself the instant it's tapped (immediate proof the tap
+      registered), and a real re-entry guard ignores a second tap while
+      the first is still working rather than letting both run.
+- [x] Share card content improved — added a real stats row (regions,
+      total visits, photos) matching what the in-app Home card actually
+      shows, so the shared image reflects genuine progress rather than
+      just a bare percentage and progress bar.
 - [x] All 41 parks: name, region, blurb, badge, coordinates, official link
 - [x] Real interactive map (Leaflet) with MapTiler standard + MML terrain layers
 - [x] Location: nearest-park sort, native permission flow, in-app pre-permission modal
@@ -91,23 +155,68 @@ Last updated: 2026-09-11
       fall through to English at all. Confidence: most entries directly
       confirmed (Finnish Wikipedia's own reference list, which cites
       Metsähallitus by name for each park, plus a few live luontoon.fi
-      URLs seen directly); the remaining handful (Hiidenportti, Hossa,
-      Patvinsuo, Tiilikkajärvi, Torronsuo, Valkmusa) are grammar-derived —
-      standard Finnish genitive inflection, a pattern with zero exceptions
-      across every other park checked, but not individually re-verified
-      against a live page one by one.
-- [ ] **Swedish luontoon.fi links: 24 of 41 now covered** (was much lower
-      before this pass). The remaining 17 still fall back to English for
-      Swedish users specifically — same original gap, just narrower now.
-      Most of the 24 are pattern-derived from one directly-confirmed
-      example (Hossa: "Hossa nationalpark" — untranslated Finnish proper
-      noun + the Swedish generic word), which is a reasonably safe pattern
-      for single-word names but genuinely unverified per park. Worth a
-      dedicated Swedish-specific verification round later — lower
-      priority than Finnish since it's a smaller audience, but still a
-      real gap while it lasts.
-- [ ] English luontoon.fi links: 17 of 41 individually verified — same
-      status as before this round, not the focus this time
+      URLs seen directly).
+      **Correction, worth recording honestly**: the grammar-derived
+      entries were NOT actually error-free — two were wrong and caught
+      only because the user checked the real pages directly, not because
+      the grammar reasoning held: Perämeri's genitive was written as
+      "peramerin" (should be "perameren" — meri → meren, like Itämeren,
+      not merin) and Puurijärvi-Isosuo as "...isosuon..." (should be
+      "...isonsuon..." — a compound adjective+noun like "Isosuo" declines
+      both parts together: iso → ison + suo → suon). Both fixed directly
+      in the code. The earlier "zero exceptions" confidence claim was
+      itself wrong — Finnish genitive inflection has more edge cases
+      (consonant gradation, compound agreement) than the sample checked
+      at the time suggested.
+      **Follow-up verification done**: Hiidenportti, Hossa, Patvinsuo,
+      and Tiilikkajärvi are now directly confirmed via real luontoon.fi
+      URLs seen in search results — all four were already correct.
+      Torronsuo and Valkmusa didn't turn up a direct primary-source hit
+      this round, but both follow the simplest, most regular inflection
+      pattern (o-stem/a-stem + n, already confirmed correct across many
+      other parks) — much lower risk than the two errors that actually
+      broke, which both involved genuine irregularities (consonant
+      gradation, compound-word agreement). Still technically unverified,
+      just not equally suspect.
+- [x] **Swedish luontoon.fi links: 41 of 41 — fully covered.** Jumped from
+      24 after the user provided 17 real, directly-verified URLs in one
+      batch. These are a meaningfully higher confidence tier than the
+      earlier 24 (which were mostly pattern-derived from a single
+      confirmed example) — these are actual confirmed pages, not guesses.
+      One correction caught in the same batch: Pyhä-Häkki's Swedish slug
+      was wrong (had "-nationalpark", real page uses "-national-park" —
+      an inconsistent suffix on luontoon.fi's own site, not something
+      that could have been predicted from pattern alone).
+      **Worth remembering**: this batch proved the "just concatenate the
+      Finnish name + nationalpark" fallback pattern isn't universally
+      safe — Teijo's real Swedish name is "Tykö" (a genuinely different
+      word, not a translation of "Teijo") and Etelä-Konnevesi's is
+      "Södra Konnevesi" (translated, not transliterated).
+      **A second mistake, worth recording honestly rather than quietly
+      fixing**: right after the 17-URL batch, a verification sweep
+      claimed Puurijärvi-Isosuo was "the one remaining gap." That was
+      wrong — Puurijärvi already had a correct Swedish entry (added in an
+      earlier session), and the check simply had a blind spot: it used
+      simple line-adjacency (grep -B1) to match a park id to its "sv:"
+      line, which silently breaks on any multi-line-formatted entry like
+      Puurijärvi's. The user caught this by testing the actual app and
+      reporting it opened the correct Swedish page. A proper parse (match
+      each full `id: { ... }` block, not adjacent lines) found the real
+      gap: Urho Kekkonen, confirmed and added
+      ("urho-kekkonens-nationalpark"). Lesson: a "verification sweep"
+      built on a fragile parsing method can produce a confident, wrong
+      answer — worth designing the actual check to match the data's real
+      structure next time, not a shortcut that happens to work for most
+      entries.
+- [x] **English luontoon.fi links: confirmed working, all 41** — direct
+      confirmation from the user testing the actual app, not an
+      individual per-park re-verification on my end. Worth noting the
+      distinction honestly: this is real-world ground truth (the
+      strongest kind, same as how the Puurijärvi Swedish correction got
+      caught), not the same as having individually checked all 41 English
+      slugs myself the way the earlier 17 were. If a future edit touches
+      `enSlug()` or the English override table, that's worth re-testing
+      rather than assuming it still holds.
 - [ ] Park coordinates — spot-check in progress. Päijänne was found to be
       ~40 km off (and its region was wrong too — fixed both). Found via
       visually comparing against the real MML terrain outlines, which is a
@@ -163,17 +272,13 @@ Last updated: 2026-09-11
       clean license family as MML and Wikimedia — no action needed until
       the LIPAS/GPX integration itself actually gets built (still a
       deferred, long-term item), but the legal groundwork is now settled.
-- [ ] **NationalPark font — license confirmed clean (SIL OFL 1.1), one
-      small thing still to actually do.** Found the license file sitting
-      right alongside the font itself: SIL Open Font License 1.1,
-      copyright 2025 The National Park Project Authors. Explicitly
-      permits embedding in commercial software free of charge — only
-      restriction is not selling the font by itself, which doesn't apply
-      here. Real remaining task: the license requires the copyright
-      notice stay reasonably accessible to users. Cheapest fix — add one
-      more line to the Info screen's existing credits list (already
-      credits MapTiler, OSM, Wikimedia, Metsähallitus, MML), same pattern
-      already established, just one more source added to it.
+- [x] **NationalPark font — license confirmed clean (SIL OFL 1.1) and
+      credited.** Found the license file alongside the font itself: SIL
+      Open Font License 1.1, copyright 2025 The National Park Project
+      Authors — explicitly permits embedding in commercial software free
+      of charge. Added the required copyright notice to the Info screen's
+      credits list (all 3 languages), same pattern as the other credits
+      there. Nothing further needed on this one.
 
 ## 🔌 Setup needed for latest features
 
@@ -239,7 +344,7 @@ Last updated: 2026-09-11
       conversion and started following the page theme instead of staying a
       constant light color, even though it sits on a permanently-dark photo.
       Fixed.
-- [x] New theme system needs a real walkthrough — this was the single
+- [ ] New theme system needs a real walkthrough — this was the single
       biggest mechanical change made to the app (146 individual color
       classes converted to CSS variables across the whole file). Validated
       structurally (parser, brace/paren balance) but that doesn't prove
@@ -257,7 +362,7 @@ Last updated: 2026-09-11
 ## 📋 Backlog — cheap, high value (good next picks)
 
 - [ ] Navigate button — one-tap link to Google/Apple Maps for directions
-- [x] More hiking-behavior achievements (e.g. shelter-based, winter-specific)
+- [ ] More hiking-behavior achievements (e.g. shelter-based, winter-specific)
 - [ ] Richer share card on logging a single visit (photo + badge + park name
       overlay, not just the overall progress card) — Instagram-Story-shaped
 - [ ] Dynamic seasonal challenge UI (e.g. "Ruska Challenge" — visit Lapland
@@ -265,21 +370,46 @@ Last updated: 2026-09-11
 
 ## 📋 Backlog — bigger, real work, sequence deliberately
 
-- [ ] Multiple visits per park (Nuuksio 2024, 2025, ... each with own
-      date/note/photo) — on hold, paired with:
-- [ ] Multiple photos per visit — on hold, same reason (both need a real
-      data-model change: visit history array instead of one slot per park)
-- [ ] Photo storage upgrade (move off current storage toward IndexedDB or
-      native Filesystem) — becomes more urgent once the above two ship, and
-      now that photos show up on Explore cards + Home too (more places
-      touching the same stored images)
+- [ ] Multiple photos per single visit (still just one photo per visit —
+      multiple *visits* per park is done, see below, but each individual
+      visit still holds only one photo slot)
 - [ ] Structured route objects (name/length/difficulty as real fields, not
       one text paragraph) — deferred until something actually needs to query
       routes individually (e.g. drawing one on the map, filtering by length)
-- [ ] Explicit "Download park for offline" button — pre-fetch a park's full
-      tile bounding box at set zoom levels, instead of relying on the user
-      having already panned over the area. Real value for spotty-signal
-      parks (Lemmenjoki, UKK, etc.)
+- [ ] **Offline map download — refined design, planned but not started.**
+      Better approach than the original idea (pre-fetching a park's whole
+      bounding box, which needed geographic data that doesn't actually
+      exist for any park yet): instead, let the user zoom/pan the map to
+      whatever area they want, then explicitly download that visible
+      area plus a zoom range around it. Simpler to build too — no new
+      per-park geo data needed, "download what's currently on screen" is
+      something the map already knows.
+      **Real size math done for Lemmenjoki** (Finland's largest park,
+      ~2850 km², ~70×55km bounding box, ~68.5°N — tiles cover less
+      ground at northern latitudes, so this is close to the worst case):
+      a single zoom level ranges from ~2 MB (z11) to ~538 MB (z15) —
+      roughly quadrupling per level deeper. z11-z13 (whole-park view) is
+      ~44 MB; z11-z14 (real trail-following detail) is ~179 MB; z13-z15
+      is ~706 MB. The zoom range offered is effectively the whole size
+      decision, not a minor tuning knob — "one more zoom level" and "an
+      order of magnitude bigger download" are the same choice. Leaning
+      toward roughly z11-z14 as the actual range to offer, but that's a
+      real product call to make deliberately, not picked arbitrarily.
+      **Requirements now confirmed, not just nice-to-haves**:
+      - Show the estimated size *before* downloading (calculated from
+        the math above), not just enforce a silent cap — let the person
+        decide the trade-off knowingly rather than guessing or being
+        blocked without explanation
+      - Downloaded areas must be exempt from the existing LRU tile-cache
+        eviction, or a deliberately-saved area for an upcoming trip could
+        get quietly evicted by ordinary browsing before the trip happens
+      - A "downloaded areas" list with delete/free-space capability is no
+        longer optional once real file sizes like these are in play —
+        someone needs a way to see and manage what's actually using space
+      Not started. Real next step when this gets picked up: settle the
+      actual zoom range and hard size cap using the numbers above, then
+      design the download-progress UI and the management list together,
+      not the tile-fetching logic first.
 
 ## 🗺️ Backlog — long-term / separate projects
 
@@ -305,6 +435,13 @@ Last updated: 2026-09-11
 - [ ] Pre-curated fixed photo database (vs. today's live Wikipedia fetch) —
       solved the same problem (attribution) a much cheaper way already;
       only revisit if live attribution turns out insufficient in practice
+- [ ] User accounts + cloud sync (Supabase/Firebase) — discarded for now,
+      not necessarily forever. Real reason it's a bigger call than a
+      normal backlog item: changes the app from offline-only/zero-server-
+      cost to needing real backend infrastructure, ongoing hosting costs,
+      and GDPR obligations for storing personal data server-side. Revisit
+      deliberately if that trade-off ever looks worth it — not something
+      to quietly reconsider alongside smaller ideas.
 
 ## 💡 Ideas mentioned but not yet decided on
 
@@ -359,38 +496,58 @@ Last updated: 2026-09-11
       serves the park-tracking purpose, it isn't the purpose. Revisit if
       MML's `taustakartta` turns out to look or perform worse than hoped.
 
-- [ ] **Trip prep tips / packing checklists — now fully specced, ready to
-      build.** Placement decided: a small teaser card on Home, same visual
-      weight as the existing Nature First card, sitting right alongside it
-      (personal-stats stuff like Journey/Latest visit/Achievements at the
-      top of Home, "good to know" reference cards like this one and Nature
-      First at the bottom). Tapping the teaser opens a dedicated full
-      screen with three tabs/sections that build on each other:
-      - **Day trip**: check weather + trail conditions/closures before
-        leaving, tell someone your route and return time. Pack: water,
-        food, weather layers + rain gear, proper footwear, offline map
-        downloaded, headlamp (even for day trips), basic first aid,
-        charged phone, way to carry trash out
-      - **3-day trip** (adds to the above): overnight gear (tent or
-        reserved hut/lean-to), sleeping bag + pad, stove + fuel (open
-        fires often restricted), food for every day plus one spare, water
-        purification, paper map as backup, check hut/campsite reservation
-        requirements, know your bail-out point
-      - **Longer trips** (adds to the above): real map + compass skill
-        (not just GPS), share route + check-in points with someone at
-        home, basic first aid knowledge, emergency numbers written on
-        paper, gear repair kit, realistic daily distances with a rest-day
-        buffer
+- [ ] **Trip prep hub — consolidated plan, combining two previously
+      separate ideas, ready to build.** One Home entry point ("Suunnitteletko
+      retkeä? — Katso vinkit" / "Planning a trip? Check tips here"), same
+      small visual weight as the existing Nature First card, sitting
+      alongside it (personal-stats stuff like Journey/Latest visit/
+      Achievements at the top of Home, "good to know" reference cards
+      like this one and Nature First at the bottom). Tapping it opens one
+      screen containing both pieces together, not two separate features:
+      - **Trip-length tips** (three tabs/sections that build on each other):
+        - *Day trip*: check weather + trail conditions/closures before
+          leaving, tell someone your route and return time. Pack: water,
+          food, weather layers + rain gear, proper footwear, offline map
+          downloaded, headlamp (even for day trips), basic first aid,
+          charged phone, way to carry trash out
+        - *3-day trip* (adds to the above): overnight gear (tent or
+          reserved hut/lean-to), sleeping bag + pad, stove + fuel (open
+          fires often restricted), food for every day plus one spare,
+          water purification, paper map as backup, check hut/campsite
+          reservation requirements, know your bail-out point
+        - *Longer trips* (adds to the above): real map + compass skill
+          (not just GPS), share route + check-in points with someone at
+          home, basic first aid knowledge, emergency numbers written on
+          paper, gear repair kit, realistic daily distances with a
+          rest-day buffer
+      - **Fire warning reminder** (newly decided to live here, not as a
+        separate Home card — resolves that earlier open placement
+        question directly): a plain line — "Check current fire warnings
+        before you go" — linking straight to
+        ilmatieteenlaitos.fi/metsapalovaroitukset. Deliberately the
+        simple version already decided on earlier, not the live API:
+        no parsing, no unknown endpoint, no network-failure handling to
+        design around, delivers the real behavior change (remembering to
+        check) for a fraction of the effort. The live-data version
+        remains a possible future upgrade, not a prerequisite — if it's
+        ever picked up, the earlier research already confirmed FMI's
+        open data API is real, free, and needs no registration
+        (confirmed directly on ilmatieteenlaitos.fi), but the main API
+        returns WFS/GML (XML), not simple JSON, and the specific
+        warnings endpoint (separate from the general forecast API) was
+        never actually located — worth picking up from there, not
+        re-researching from zero.
       Deliberately does NOT repeat the existing Nature First card's
       content (Everyone's Right / leave-no-trace ethics) — this is pure
       practical logistics, that one stays the ethics/etiquette card.
-      **Open question before building**: tappable checkboxes (matches the
-      app's whole "check things off" character, though nothing would
-      persist — fresh list each time you open it) vs. plain static lists
-      (simpler to build). Leaning checkboxes but not decided.
+      **Open question before building**: tappable checkboxes for the trip
+      tips (matches the app's whole "check things off" character, though
+      nothing would persist — fresh list each time you open it) vs. plain
+      static lists (simpler to build). Leaning checkboxes but not decided.
       One fact worth verifying before it ships: whether 112 genuinely
       works without signal in Finland the way it's commonly said to —
       don't want to state that as fact without checking.
+      Not started — planning only, per explicit request.
 
 - [ ] Export trail journal as a nicer document (PDF) — different from the
       raw-data export above: this one is for sharing/printing a personal
@@ -404,55 +561,11 @@ Last updated: 2026-09-11
       "multiple visits per park" backlog item — worth designing together
       once that data-model change actually happens, rather than bolting
       fields on piecemeal
-- [ ] Once multiple visits per park exists, add a "total visit count" stat
-      to the Home journey card (e.g. "23 visits" vs. "15 parks") — a
-      meaningfully different number once one park can have several visits
-      logged against it. Small addition, but only makes sense after the
-      data model actually supports multiple visits — noted here so it's
-      not forgotten when that work happens
-- [ ] **FMI forest fire warning badge — decided: yes, worth building, scope
-      narrowed to fire warnings specifically, not full weather.** You
-      confirmed this directly — it's exactly the kind of thing people
-      forget to check before a trip, and that's the real value, not a
-      weather forecast (which the "don't become a weather app" caution
-      still applies to).
-      **What I've actually verified** (not just assumed):
-      - FMI's open data API is real, free, and needs no registration —
-        confirmed directly on ilmatieteenlaitos.fi, contradicting an older
-        third-party doc that claimed an API key was required
-      - Metsäpalovaroitus (forest fire warning) is a real, official FMI
-        product with its own page — this isn't a guess, it exists
-      - **Not yet confirmed**: weather *warnings* (which fire warnings are
-        a type of) are explicitly served from a *separate* interface from
-        the general WFS data API — the source says so directly but I
-        haven't found that specific endpoint's documentation yet
-      - The main API returns WFS/GML (XML), not simple JSON — parsing
-        that client-side in the app is more work than a typical REST API
-        would be, worth knowing before scoping the build
-      **Next step before building the real API version**: find the actual
-      warnings-specific endpoint and confirm its response format, rather
-      than starting to build against the general forecast API and hoping
-      fire warnings work the same way
-      **Simple fallback, genuinely worth considering as the actual first
-      version**: skip the API entirely — a plain reminder card (Home or
-      the trip-tips section) with a line like "Check current fire warnings
-      before you go" linking straight to
-      ilmatieteenlaitos.fi/metsapalovaroitukset. No parsing, no unknown
-      endpoint, no network-failure handling to design around, delivers
-      the actual behavior change (remembering to check) with a fraction
-      of the effort. The live-data version is a nicer upgrade later, not
-      a prerequisite for getting real value now
 - [ ] Multi-attribute compound filters on Explore (e.g. "accessible AND
       wishlist AND Lapland" at once) — builds on filters that already exist
       individually, just not combinable yet
 - [ ] Badge unlock animation (confetti / SVG draw-in) when completing a
       milestone — fun, low-risk polish, no functional risk
-- [ ] User accounts + cloud sync (Supabase/Firebase) — NOT a simple backlog
-      item, flagging deliberately separate from the rest. This changes the
-      app from offline-only/zero-server-cost to needing real backend
-      infrastructure, ongoing hosting costs, and GDPR obligations for
-      storing personal data server-side. Worth a real decision on its own,
-      not something to casually greenlight alongside smaller ideas
 - [ ] Premium cosmetic map styles / exclusive themes (ties into the
       monetization fix above)
 - [ ] Gold-leaf "Supporter Badge" next to username (also ties into
