@@ -1,156 +1,310 @@
 <!doctype html>
-<html lang="fi">
+<html lang="fi" data-lang="fi">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kansallispuistot – Tietosuojaseloste / Privacy Policy</title>
+<title>Kansallispuistot — retkipassi | Kansallispuistosovellus Androidille</title>
+<meta name="description" content="Retkipassi Suomen kaikkiin 41 kansallispuistoon: kirjaa käynnit, katso vaellusreitit, tuvat ja laavut retkikartalta ja kerää saavutuksia. Android-sovellus suomeksi, ruotsiksi ja englanniksi – ei mainoksia, ei tiliä.">
+<link rel="canonical" href="https://tuplajuusto.github.io/Kansallispuistot/">
+<meta property="og:title" content="Kansallispuistot — retkipassi">
+<meta property="og:description" content="Suomen kaikki 41 kansallispuistoa taskussasi – kirjaa käynnit, katso reitit kartalta ja löydä seuraava retkikohde.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tuplajuusto.github.io/Kansallispuistot/">
+<meta property="og:site_name" content="Kansallispuistot — retkipassi">
+<meta property="og:locale" content="fi_FI">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:image" content="https://tuplajuusto.github.io/Kansallispuistot/img/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Kansallispuistot — retkipassi: 41 kansallispuistoa, yksi retkipassi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="google-play-app" content="app-id=com.kansallispuistot.app">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "MobileApplication",
+ "name": "Kansallispuistot — retkipassi",
+ "alternateName": "Kansallispuistot",
+ "operatingSystem": "Android",
+ "applicationCategory": "TravelApplication",
+ "description": "Retkipassi Suomen kaikkiin 41 kansallispuistoon: käyntipäiväkirja, retkikartta reitteineen ja taukopaikkoineen, saavutukset ja retkivinkit.",
+ "inLanguage": [
+  "fi",
+  "sv",
+  "en"
+ ],
+ "url": "https://tuplajuusto.github.io/Kansallispuistot/",
+ "installUrl": "https://play.google.com/store/apps/details?id=com.kansallispuistot.app",
+ "downloadUrl": "https://play.google.com/store/apps/details?id=com.kansallispuistot.app",
+ "sameAs": [
+  "https://play.google.com/store/apps/details?id=com.kansallispuistot.app"
+ ],
+ "image": "https://tuplajuusto.github.io/Kansallispuistot/img/share.jpg",
+ "screenshot": [
+  "https://tuplajuusto.github.io/Kansallispuistot/img/koti.jpg",
+  "https://tuplajuusto.github.io/Kansallispuistot/img/kartta.jpg",
+  "https://tuplajuusto.github.io/Kansallispuistot/img/kaynti.jpg"
+ ]
+}
+</script>
+<meta name="theme-color" content="#173421">
 <style>
-  :root { --bg:#f2f7ef; --card:#ffffff; --text:#26392a; --body:#3d5142; --muted:#6b7d67; --accent:#9a7b3c; --line:#dbe5d3; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg:#173421; --card:#132a1e; --text:#f3ede0; --body:#dfe8de; --muted:#9db89f; --accent:#c7a86b; --line:#1f3d2a; }
+  :root {
+    --forest:#173421; --forest-2:#132a1e; --forest-3:#1f3d2a;
+    --cream:#f3ede0; --mist:#f2f7ef; --card:#ffffff; --line:#dbe5d3;
+    --text:#26392a; --body:#3d5142; --muted:#5f7259;
+    --gold:#c7a86b; --gold-dark:#7d6230; --brown:#6b4a2f;
   }
-  * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--body); font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
-  main { max-width:760px; margin:0 auto; padding:28px 16px 64px; }
-  h1 { color:var(--text); font-size:1.7rem; line-height:1.25; margin:0 0 4px; }
-  h2 { color:var(--text); font-size:1.2rem; margin:32px 0 8px; }
-  h3 { color:var(--text); font-size:1rem; margin:20px 0 4px; }
-  section.policy > h2:first-child { margin-top:4px; }
-  .lang { display:flex; gap:12px; margin:12px 0 24px; }
-  .lang a { color:var(--accent); font-weight:600; text-decoration:none; }
-  section.policy { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 20px 8px; margin-bottom:28px; }
-  .meta { color:var(--muted); font-size:.9rem; margin:0 0 12px; }
-  ul { padding-left:1.2em; }
-  li { margin:3px 0; }
-  a { color:var(--accent); }
-  .box { border-left:3px solid var(--accent); padding:4px 12px; margin:12px 0; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--mist); color:var(--body); font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  a { color:var(--gold-dark); }
+  img { max-width:100%; height:auto; display:block; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 16px; }
+  [data-lang="fi"] .en, [data-lang="en"] .fi { display:none !important; }
+
+  /* top bar */
+  .top { background:var(--forest); color:var(--cream); }
+  .top .wrap { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:56px; flex-wrap:wrap; }
+  .top nav { display:flex; gap:16px; align-items:center; flex-wrap:wrap; font-size:14px; }
+  .top nav a { color:var(--cream); text-decoration:none; opacity:.9; }
+  .top nav a:hover { opacity:1; text-decoration:underline; }
+  .langs { display:inline-flex; background:var(--forest-2); border-radius:10px; padding:3px; }
+  .langs button { background:none; border:0; color:#9db89f; font:600 13px system-ui,sans-serif; padding:6px 10px; border-radius:8px; cursor:pointer; min-width:40px; min-height:32px; }
+  .langs button[aria-pressed="true"] { background:var(--forest-3); color:var(--gold); }
+  .brand-sub { font-weight:500; opacity:.8; }
+  @media (max-width:420px){ .brand-sub{ display:none; } }
+  .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:18px; color:var(--cream); text-decoration:none; }
+
+  /* hero */
+  .hero { background:linear-gradient(180deg,var(--forest) 0%,#1d3f28 100%); color:var(--cream); padding:48px 0 64px; overflow:hidden; }
+  .hero .wrap { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr); gap:40px; align-items:center; }
+  .hero h1 { font-size:clamp(34px,6vw,56px); line-height:1.08; margin:0 0 14px; letter-spacing:-.01em; }
+  .hero p.lead { font-size:clamp(17px,2.2vw,20px); color:#dfe8de; margin:0 0 26px; max-width:34em; }
+  .cta { display:inline-flex; align-items:center; gap:10px; background:var(--gold); color:#16281c; font-weight:700; font-size:17px; text-decoration:none; padding:14px 22px; border-radius:14px; min-height:48px; }
+  .cta:hover { background:#d4b77c; }
+  .cta svg { flex-shrink:0; }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; padding:0; list-style:none; }
+  .chips li { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); border-radius:999px; padding:5px 12px; font-size:14px; color:#dfe8de; }
+  .phones { position:relative; height:520px; }
+  .phone { position:absolute; width:250px; border-radius:28px; overflow:hidden; border:6px solid #0d1912; box-shadow:0 24px 60px rgba(0,0,0,.45); background:#0d1912; }
+  .phone.a { left:6%; top:24px; transform:rotate(-4deg); }
+  .phone.b { right:4%; top:0; transform:rotate(4deg); }
+
+  /* sections */
+  section { padding:64px 0; }
+  h2 { color:var(--text); font-size:clamp(26px,4vw,34px); line-height:1.2; margin:0 0 10px; }
+  .sub { color:var(--muted); margin:0 0 32px; max-width:40em; }
+  .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:20px; }
+  .card h3 { color:var(--text); font-size:18px; margin:12px 0 6px; }
+  .card p { margin:0; font-size:15px; }
+  .icon { width:44px; height:44px; border-radius:12px; background:var(--brown); display:flex; align-items:center; justify-content:center; }
+
+  .shots { display:flex; gap:16px; overflow-x:auto; padding:4px 2px 18px; scroll-snap-type:x mandatory; }
+  .shots figure { margin:0; flex:0 0 220px; scroll-snap-align:start; }
+  .shots img { border-radius:22px; border:5px solid #0d1912; box-shadow:0 10px 26px rgba(23,52,33,.18); }
+  .shots figcaption { font-size:14px; color:var(--muted); text-align:center; margin-top:8px; }
+
+  .privacy { background:var(--forest); color:#dfe8de; }
+  .privacy h2 { color:var(--cream); }
+  .privacy .sub { color:#b9cbb9; }
+  .privacy ul { list-style:none; padding:0; margin:0 0 24px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 24px; }
+  .privacy li { display:flex; gap:10px; align-items:flex-start; }
+  .privacy li svg { flex-shrink:0; margin-top:4px; }
+  .privacy a { color:var(--gold); font-weight:600; }
+
+  .sources { font-size:15px; }
+  .sources dl { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:10px 20px; margin:0; }
+  .sources dt { font-weight:600; color:var(--text); }
+  .sources dd { margin:0; }
+  .note { margin-top:22px; padding:14px 16px; background:var(--card); border:1px solid var(--line); border-radius:12px; font-size:14px; }
+
+  footer { background:var(--forest-2); color:#b9cbb9; font-size:14px; padding:28px 0 40px; }
+  footer .wrap { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  footer a { color:var(--gold); }
+
+  @media (max-width:820px) {
+    .hero .wrap { grid-template-columns:1fr; }
+    .phones { height:420px; max-width:420px; margin:0 auto; width:100%; }
+    .phone { width:200px; }
+    .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  }
+  @media (max-width:560px) {
+    .grid, .privacy ul, .sources dl { grid-template-columns:1fr; }
+    .sources dt { margin-top:8px; }
+    .phones { height:360px; }
+    .phone { width:170px; border-radius:22px; }
+    .top nav .hide-s { display:none; }
+    section { padding:48px 0; }
+  }
 </style>
 </head>
 <body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">
+      <svg width="30" height="30" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#6b4a2f"></rect><path d="M20 6 L25 15 L22.3 15 L27 22 L23.8 22 L29 30 L11 30 L16.2 22 L13 22 L17.7 15 L15 15 Z M18.5 30 L21.5 30 L21.5 33 L18.5 33 Z" fill="#efe6d2"></path></svg>
+      <span>Kansallispuistot<span class="brand-sub"> — retkipassi</span></span>
+    </a>
+    <nav aria-label="Sivun osiot">
+      <a class="hide-s" href="#ominaisuudet"><span class="fi">Ominaisuudet</span><span class="en">Features</span></a>
+      <a href="tietosuoja/"><span class="fi">Tietosuojaseloste</span><span class="en">Privacy policy</span></a>
+      <span class="langs" role="group" aria-label="Kieli / Language">
+        <button type="button" data-set-lang="fi" aria-pressed="true">FI</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+      </span>
+    </nav>
+  </div>
+</header>
+
 <main>
-  <h1>Kansallispuistot</h1>
-  <p class="meta">Tietosuojaseloste · Privacy Policy</p>
-  <nav class="lang"><a href="#fi">Suomeksi</a><a href="#en">In English</a></nav>
-
-  <!-- ===================== SUOMI ===================== -->
-  <section class="policy" id="fi" lang="fi">
-    <h2>Tietosuojaseloste</h2>
-    <p class="meta">Päivitetty 12.10.2026 · Koskee Kansallispuistot-sovellusta (Android)</p>
-
-    <div class="box">
-      <p><strong>Lyhyesti:</strong> sovellus ei kerää sinusta tietoja. Käyntisi, muistiinpanosi, kuvasi ja sijaintisi pysyvät puhelimessasi. Sovelluksessa ei ole käyttäjätiliä, mainoksia, analytiikkaa eikä seurantaa, eikä kehittäjä saa tietojasi missään vaiheessa.</p>
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1 class="fi">Suomen 41 kansallispuistoa taskussasi</h1>
+        <h1 class="en">All 41 Finnish national parks in your pocket</h1>
+        <p class="lead fi">Kirjaa käyntisi, tallenna muistot kuvineen, katso reitit ja tuvat kartalta ja löydä seuraava retkikohde. Kaikki tiedot pysyvät omassa puhelimessasi.</p>
+        <p class="lead en">Log your visits, keep your memories with photos, see trails and huts on the map and find your next trip. Everything stays on your own phone.</p>
+        <a class="cta" href="https://play.google.com/store/apps/details?id=com.kansallispuistot.app" rel="noopener">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.5v17a1 1 0 0 0 1.5.86l14.2-8.5a1 1 0 0 0 0-1.72L6.5 2.64A1 1 0 0 0 5 3.5z" fill="#16281c"></path></svg>
+          <span class="fi">Lataa Google Playsta</span><span class="en">Get it on Google Play</span>
+        </a>
+        <ul class="chips">
+          <li><span class="fi">Android</span><span class="en">Android</span></li>
+          <li><span class="fi">Suomi · svenska · English</span><span class="en">Finnish · Swedish · English</span></li>
+          <li><span class="fi">Ei mainoksia</span><span class="en">No ads</span></li>
+          <li><span class="fi">Ei tiliä eikä seurantaa</span><span class="en">No account, no tracking</span></li>
+        </ul>
+      </div>
+      <div class="phones" aria-hidden="true">
+        <div class="phone a"><img src="img/koti.jpg" alt="" width="540" height="900"></div>
+        <div class="phone b"><img src="img/kartta.jpg" alt="" width="540" height="900"></div>
+      </div>
     </div>
+  </div>
 
-    <h3>1. Rekisterinpitäjä ja yhteystiedot</h3>
-    <p>Kansallispuistot-sovelluksen kehittäjä (yksityinen sovelluskehittäjä, Suomi). Yhteydenotot: <a href="mailto:kansallispuistot.app@gmail.com">kansallispuistot.app@gmail.com</a>.</p>
-
-    <h3>2. Mitä tietoja sovellus tallentaa ja minne</h3>
-    <p>Kaikki alla oleva tallennetaan <strong>vain puhelimesi omaan muistiin</strong> (sovelluksen paikallinen tallennustila). Tietoja ei lähetetä kehittäjälle eikä mihinkään palvelimeen.</p>
-    <ul>
-      <li>käydyt puistot ja käynnit: päivämäärä, muistiinpano, kuljettu matka ja retken kesto</li>
-      <li>käynteihin itse lisäämäsi kuvat</li>
-      <li>toivelista</li>
-      <li>asetukset: kieli, teema, karttatasot ja retken muistilistan rastit</li>
-      <li>välimuisti: aiemmin katsotut karttatiilet ja puistojen kuvat, jotta ne toimivat myös ilman verkkoyhteyttä</li>
-    </ul>
-    <p>Puistojen tiedot, reitit, retkeilypalvelut ja puistojen rajat sisältyvät sovellukseen valmiiksi, eikä niiden käyttö lähetä tietoja mihinkään.</p>
-
-    <h3>3. Sijainti</h3>
-    <p>Sijaintia käytetään vain, jos annat siihen luvan. Sitä käytetään etäisyyksien laskemiseen puistoihin ja sisäänkäynteihin, lähimpien puistojen näyttämiseen sekä oman sijaintisi näyttämiseen kartalla. Kun kartta on auki, sijaintia päivitetään, jotta merkki liikkuu mukanasi. Sijaintia ei seurata taustalla, eikä sitä tallenneta pysyvästi, lähetetä eteenpäin tai jaeta. Voit perua luvan milloin tahansa puhelimen asetuksista; muut toiminnot toimivat ilman sitä.</p>
-
-    <h3>4. Kamera ja kuvat</h3>
-    <p>Kun lisäät käyntiin kuvan, valitset sen itse kamerasta tai galleriasta. Kuva tallennetaan vain sovelluksen omaan tallennustilaan puhelimessasi.</p>
-
-    <h3>5. Verkkopalvelut, joihin sovellus ottaa yhteyttä</h3>
-    <p>Osa sisällöstä haetaan suoraan näiden palveluiden palvelimilta. Kuten aina verkkoliikenteessä, palvelu näkee tällöin laitteesi IP-osoitteen ja pyydetyn sisällön (esim. mikä karttatiili tai kuva haettiin). Sovellus ei lähetä niille sijaintiasi, käyntejäsi tai muita henkilötietojasi.</p>
-    <ul>
-      <li><strong>Maanmittauslaitos</strong> – karttapohjat (avoin karttakuvapalvelu)</li>
-      <li><strong>Wikimedia Commons / Wikipedia</strong> – puistojen kuvat sekä kuvien tekijä- ja lisenssitiedot</li>
-    </ul>
-    <p>Lisäksi sovelluksessa on linkkejä, jotka avautuvat vain kun napautat niitä, ja joihin sovelletaan kyseisen palvelun omaa tietosuojaa: luontoon.fi (Metsähallitus), Google Maps (reittiohjeet sisäänkäynneille ja pysäköintipaikoille), Ilmatieteenlaitos (metsäpalovaroitukset), Google Play sekä sähköposti virheilmoituksia varten.</p>
-
-    <h3>6. Varmuuskopiot ja jakaminen</h3>
-    <ul>
-      <li><strong>Vienti:</strong> kun viet tietosi, sovellus luo varmuuskopiotiedoston, joka sisältää käyntisi, muistiinpanosi, kuvasi, toivelistasi sekä kieli- ja teema-asetuksen. Tiedosto tallentuu tai jaetaan sinne, minne itse valitset; huolehdi siitä kuin muistakin henkilökohtaisista tiedostoista.</li>
-      <li><strong>Jakaminen:</strong> jakokuvat (esim. edistymiskortti) luodaan puhelimessa, ja ne lähtevät vain valitsemaasi sovellukseen puhelimen omalla jakotoiminnolla.</li>
-      <li><strong>Androidin varmuuskopiointi:</strong> jos olet ottanut Androidin varmuuskopioinnin käyttöön, Android voi sisällyttää sovelluksen tiedot Google-tilisi varmuuskopioon ja palauttaa ne uuteen puhelimeen. Tätä hallitaan puhelimen ja Google-tilin asetuksista, eikä kehittäjä näe näitä tietoja.</li>
-    </ul>
-
-    <h3>7. Mitä sovelluksessa ei ole</h3>
-    <p>Ei käyttäjätiliä tai kirjautumista, ei mainoksia, ei analytiikkaa, ei kaatumisraportointia, ei seurantaa eikä tietojen myyntiä tai jakamista kolmansille osapuolille.</p>
-
-    <h3>8. Ostaminen</h3>
-    <p>Sovelluksen osto ja maksaminen hoidetaan Google Playssa. Google käsittelee niihin liittyvät tiedot oman tietosuojakäytäntönsä mukaisesti; kehittäjä ei saa maksutietojasi.</p>
-
-    <h3>9. Tietojen poistaminen</h3>
-    <p>Voit poistaa yksittäisen käynnin tai puiston käynnit sovelluksessa. Kaikki tiedot poistuvat, kun tyhjennät sovelluksen tiedot puhelimen asetuksista tai poistat sovelluksen. Androidin varmuuskopion voit poistaa Google-tilisi asetuksista. Itse viemäsi varmuuskopiotiedostot poistat itse.</p>
-
-    <h3>10. Lapset</h3>
-    <p>Sovellus ei pyydä ikää, nimeä tai muita tunnistetietoja eikä tietoisesti kerää lasten tietoja.</p>
-
-    <h3>11. Oikeutesi ja muutokset</h3>
-    <p>Koska kehittäjä ei käsittele henkilötietojasi, tietosi ovat kokonaan omassa hallinnassasi. Kysymyksiin vastaamme osoitteessa <a href="mailto:kansallispuistot.app@gmail.com">kansallispuistot.app@gmail.com</a>. Jos tämä seloste muuttuu, päivitetty versio julkaistaan tällä sivulla ja päivämäärä muutetaan.</p>
+  <section id="ominaisuudet">
+    <div class="wrap">
+      <h2><span class="fi">Kaikki retkeilijän tarvitsema yhdessä paikassa</span><span class="en">Everything a hiker needs in one place</span></h2>
+      <p class="sub"><span class="fi">Kansallispuistot — retkipassi on retkeily- ja vaellussovellus kansallispuistoissa kulkeville – niin ensimmäistä puistoaan suunnittelevalle kuin kaikkia 41:tä keräävälle. Se toimii retkipassina, retkipäiväkirjana ja retkikarttana samassa sovelluksessa.</span><span class="en">A hiking app for people who explore Finland's national parks – whether you're planning your first park or collecting all 41. It works as a park passport, hiking journal and trail map in one.</span></p>
+      <div class="grid">
+        <div class="card">
+          <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#efe6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-1.5z"></path><path d="M8 7h6M8 11h6"></path></svg></div>
+          <h3 class="fi">Käyntipäiväkirja</h3><h3 class="en">Visit diary</h3>
+          <p class="fi">Päivämäärä, kesto, kuljettu matka, muistiinpano ja oma kuva jokaisesta käynnistä – samaan puistoon voi palata yhä uudelleen.</p>
+          <p class="en">Date, length of stay, distance, a note and your own photo for every visit – and you can return to the same park again and again.</p>
+        </div>
+        <div class="card">
+          <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#efe6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"></path><path d="M9 3v15M15 6v15"></path></svg></div>
+          <h3 class="fi">Kartta ja reitit</h3><h3 class="en">Map and trails</h3>
+          <p class="fi">Puistojen rajat, merkityt reitit, tuvat, laavut, tulipaikat, telttailualueet ja pysäköinti Maanmittauslaitoksen kartalla. Valitse itse, mitä näet.</p>
+          <p class="en">Park boundaries, marked trails, huts, lean-tos, fire sites, camping areas and parking on National Land Survey maps. You choose what to show.</p>
+        </div>
+        <div class="card">
+          <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#efe6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17 17 3l4 4L7 21z"></path><path d="m7 13 2 2M10 10l2 2M13 7l2 2"></path></svg></div>
+          <h3 class="fi">Mittaa ja tallenna omat reitit</h3><h3 class="en">Measure and save your own routes</h3>
+          <p class="fi">Katso etäisyys omasta sijainnistasi, piirrä reitti kartalle ja tallenna se myöhempää varten.</p>
+          <p class="en">See the distance from where you are, draw a route on the map and save it for later.</p>
+        </div>
+        <div class="card">
+          <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#efe6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="6"></circle><path d="M8.5 14 7 22l5-3 5 3-1.5-8"></path></svg></div>
+          <h3 class="fi">Saavutukset ja tilastot</h3><h3 class="en">Achievements and stats</h3>
+          <p class="fi">Seuraa, kuinka monessa puistossa ja maakunnassa olet käynyt, ja avaa omat merkit – vuodenajoista norppapuistoihin.</p>
+          <p class="en">Track how many parks and regions you've visited and unlock badges – from all four seasons to the seal parks.</p>
+        </div>
+        <div class="card">
+          <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#efe6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m15.5 8.5-2 5-5 2 2-5z"></path></svg></div>
+          <h3 class="fi">Minne seuraavaksi?</h3><h3 class="en">Where to next?</h3>
+          <p class="fi">Ehdotuksia seuraavaksi puistoksi toivelistasi, etäisyyden ja saavutustesi perusteella – sekä retkivinkit ja muistilista.</p>
+          <p class="en">Suggestions for your next park based on your wishlist, distance and achievements – plus trip tips and a packing checklist.</p>
+        </div>
+        <div class="card">
+          <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#efe6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5a7 7 0 0 1 14 0"></path><path d="M8.5 15a3.5 3.5 0 0 1 7 0"></path><circle cx="12" cy="18" r="1"></circle><path d="M3 3l18 18"></path></svg></div>
+          <h3 class="fi">Toimii myös maastossa</h3><h3 class="en">Works out on the trail</h3>
+          <p class="fi">Puistojen tiedot, reitit ja retkeilypalvelut kulkevat sovelluksen mukana, ja aiemmin katsotut kartat näkyvät ilman verkkoyhteyttä.</p>
+          <p class="en">Park information, trails and facilities are built in, and map areas you've already viewed work without a connection.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- ===================== ENGLISH ===================== -->
-  <section class="policy" id="en" lang="en">
-    <h2>Privacy Policy</h2>
-    <p class="meta">Last updated 12 October 2026 · Applies to the Kansallispuistot app (Android)</p>
-
-    <div class="box">
-      <p><strong>In short:</strong> the app does not collect data about you. Your visits, notes, photos and location stay on your phone. There is no account, no advertising, no analytics and no tracking, and the developer never receives your data.</p>
+  <section style="padding-top:0">
+    <div class="wrap">
+      <h2><span class="fi">Kuvia sovelluksesta</span><span class="en">Screenshots</span></h2>
+      <div class="shots" tabindex="0" aria-label="Kuvakaappaukset / Screenshots">
+        <figure><img src="img/koti.jpg" width="540" height="900" loading="lazy" alt="Kotinäkymä: edistyminen, Kirjaa käynti ja Minne seuraavaksi -ehdotus"><figcaption><span class="fi">Koti</span><span class="en">Home</span></figcaption></figure>
+        <figure><img src="img/kartta.jpg" width="540" height="900" loading="lazy" alt="Kartta, jossa käydyt ja käymättömät puistot"><figcaption><span class="fi">Kartta</span><span class="en">Map</span></figcaption></figure>
+        <figure><img src="img/kaynti.jpg" width="540" height="900" loading="lazy" alt="Käynnin tiedot: päivä, kesto, matka, muistiinpano ja kuva"><figcaption><span class="fi">Oma käynti</span><span class="en">Your visit</span></figcaption></figure>
+        <figure><img src="img/tutki.jpg" width="540" height="900" loading="lazy" alt="Puistolista hakukentällä"><figcaption><span class="fi">Tutki puistoja</span><span class="en">Explore parks</span></figcaption></figure>
+        <figure><img src="img/puisto-tumma.jpg" width="540" height="900" loading="lazy" alt="Puistosivu tummassa teemassa: reitit sekä laavut ja tuvat"><figcaption><span class="fi">Puistosivu</span><span class="en">Park page</span></figcaption></figure>
+        <figure><img src="img/koti-tumma.jpg" width="540" height="900" loading="lazy" alt="Kotinäkymä tummassa teemassa"><figcaption><span class="fi">Tumma teema</span><span class="en">Dark theme</span></figcaption></figure>
+      </div>
     </div>
+  </section>
 
-    <h3>1. Who is responsible</h3>
-    <p>The developer of the Kansallispuistot app (an independent developer in Finland). Contact: <a href="mailto:kansallispuistot.app@gmail.com">kansallispuistot.app@gmail.com</a>.</p>
+  <section class="privacy" id="tietosuoja">
+    <div class="wrap">
+      <h2><span class="fi">Tietosi pysyvät sinulla</span><span class="en">Your data stays with you</span></h2>
+      <p class="sub"><span class="fi">Sovellus ei kerää sinusta tietoja. Kehittäjä ei näe käyntejäsi, kuviasi eikä sijaintiasi.</span><span class="en">The app doesn't collect data about you. The developer never sees your visits, photos or location.</span></p>
+      <ul>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c7a86b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span class="fi">Käynnit, muistiinpanot ja kuvat tallentuvat vain puhelimeesi</span><span class="en">Visits, notes and photos are stored only on your phone</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c7a86b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span class="fi">Sijaintia käytetään vain luvallasi, eikä sitä lähetetä minnekään</span><span class="en">Location is used only with your permission and never sent anywhere</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c7a86b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span class="fi">Ei käyttäjätiliä, mainoksia, analytiikkaa eikä seurantaa</span><span class="en">No account, ads, analytics or tracking</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c7a86b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span class="fi">Varmuuskopioi tiedot itse tiedostoon ja siirrä uuteen puhelimeen</span><span class="en">Back up your data to a file yourself and move it to a new phone</span></li>
+      </ul>
+      <a href="tietosuoja/"><span class="fi">Lue koko tietosuojaseloste →</span><span class="en">Read the full privacy policy →</span></a>
+    </div>
+  </section>
 
-    <h3>2. What the app stores and where</h3>
-    <p>Everything below is stored <strong>only on your own phone</strong> (the app's local storage). It is never sent to the developer or to any server.</p>
-    <ul>
-      <li>parks you have visited and your visits: date, note, distance and trip length in days</li>
-      <li>photos you add to your visits</li>
-      <li>your wishlist</li>
-      <li>settings: language, theme, map layers and the ticks on the trip checklist</li>
-      <li>cache: map tiles and park photos you have already viewed, so they also work offline</li>
-    </ul>
-    <p>Park information, trails, hiking facilities and park boundaries are built into the app, and using them sends no data anywhere.</p>
-
-    <h3>3. Location</h3>
-    <p>Location is used only if you give permission. It is used to calculate distances to parks and entrances, to show the nearest parks and to show your position on the map. While the map is open your position is updated so the marker moves with you. Location is not tracked in the background and is not stored permanently, sent anywhere or shared. You can withdraw permission at any time in your phone's settings; everything else works without it.</p>
-
-    <h3>4. Camera and photos</h3>
-    <p>When you add a photo to a visit, you choose it yourself from the camera or gallery. It is stored only in the app's own storage on your phone.</p>
-
-    <h3>5. Online services the app connects to</h3>
-    <p>Some content is loaded directly from these services. As with any internet request, the service can see your device's IP address and the content requested (for example which map tile or photo). The app does not send them your location, your visits or any other personal data.</p>
-    <ul>
-      <li><strong>National Land Survey of Finland (Maanmittauslaitos)</strong> – base maps (open map tile service)</li>
-      <li><strong>Wikimedia Commons / Wikipedia</strong> – park photos and their author and licence details</li>
-    </ul>
-    <p>The app also contains links that open only when you tap them and are covered by that service's own privacy policy: luontoon.fi (Metsähallitus), Google Maps (directions to entrances and car parks), the Finnish Meteorological Institute (forest fire warnings), Google Play, and email for reporting mistakes.</p>
-
-    <h3>6. Backups and sharing</h3>
-    <ul>
-      <li><strong>Export:</strong> when you export your data, the app creates a backup file containing your visits, notes, photos, wishlist and language and theme settings. It is saved or shared wherever you choose; treat it like any other personal file.</li>
-      <li><strong>Sharing:</strong> share images (such as the progress card) are created on your phone and only go to the app you pick in your phone's share menu.</li>
-      <li><strong>Android backup:</strong> if you have Android backup turned on, Android may include the app's data in your Google Account backup and restore it on a new phone. This is controlled in your phone and Google Account settings, and the developer cannot see this data.</li>
-    </ul>
-
-    <h3>7. What the app does not have</h3>
-    <p>No account or sign-in, no advertising, no analytics, no crash reporting, no tracking, and no selling or sharing of data with third parties.</p>
-
-    <h3>8. Purchases</h3>
-    <p>Buying the app and payment are handled by Google Play. Google processes that information under its own privacy policy; the developer does not receive your payment details.</p>
-
-    <h3>9. Deleting your data</h3>
-    <p>You can delete a single visit, or all visits for a park, in the app. All data is removed when you clear the app's data in your phone's settings or uninstall the app. An Android backup can be deleted in your Google Account settings. Backup files you exported yourself are yours to delete.</p>
-
-    <h3>10. Children</h3>
-    <p>The app does not ask for age, name or any other identifying information and does not knowingly collect data from children.</p>
-
-    <h3>11. Your rights and changes</h3>
-    <p>Because the developer does not process your personal data, it stays entirely under your control. Questions are welcome at <a href="mailto:kansallispuistot.app@gmail.com">kansallispuistot.app@gmail.com</a>. If this policy changes, the updated version will be published on this page with a new date.</p>
+  <section class="sources" id="lahteet">
+    <div class="wrap">
+      <h2><span class="fi">Lähteet ja lisenssit</span><span class="en">Sources and licences</span></h2>
+      <p class="sub"><span class="fi">Sovellus käyttää avointa dataa näistä lähteistä. Kiitos!</span><span class="en">The app uses open data from these sources. Thank you!</span></p>
+      <dl>
+        <dt>Maanmittauslaitos</dt>
+        <dd><span class="fi">Taustakartta ja maastokartta (CC BY 4.0)</span><span class="en">Background and topographic maps (CC BY 4.0)</span></dd>
+        <dt>LIPAS – Jyväskylän yliopisto</dt>
+        <dd><span class="fi">Puistojen rajat ja retkeilypalvelut (CC BY 4.0)</span><span class="en">Park boundaries and hiking facilities (CC BY 4.0)</span></dd>
+        <dt>OpenStreetMap</dt>
+        <dd><span class="fi">Merkityt reitit ja täydentävät retkeilypalvelut – © OpenStreetMap-tekijät (ODbL)</span><span class="en">Marked trails and additional facilities – © OpenStreetMap contributors (ODbL)</span></dd>
+        <dt>Wikimedia Commons</dt>
+        <dd><span class="fi">Puistojen kuvat; kunkin kuvan tekijä ja lisenssi näkyvät sovelluksessa kuvan alla</span><span class="en">Park photos; each photo's author and licence are shown under the photo in the app</span></dd>
+        <dt>Metsähallitus / luontoon.fi</dt>
+        <dd><span class="fi">Linkit puistojen virallisille sivuille ajantasaista tietoa varten</span><span class="en">Links to the official park pages for up-to-date information</span></dd>
+      </dl>
+      <p class="note"><span class="fi">Kansallispuistot — retkipassi on yksityisen kehittäjän sovellus, eikä se ole Metsähallituksen virallinen palvelu. Tarkista ajantasaiset tiedot, reittien kunto ja mahdolliset sulkemiset aina luontoon.fi-sivustolta.</span><span class="en">Kansallispuistot — retkipassi is an independent app and not an official service of Metsähallitus (Parks &amp; Wildlife Finland). Always check current information, trail conditions and closures on luontoon.fi.</span></p>
+    </div>
   </section>
 </main>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Kansallispuistot — retkipassi · <a href="mailto:kansallispuistot.app@gmail.com">kansallispuistot.app@gmail.com</a></div>
+    <div><a href="tietosuoja/"><span class="fi">Tietosuojaseloste</span><span class="en">Privacy policy</span></a> · <a href="https://play.google.com/store/apps/details?id=com.kansallispuistot.app" rel="noopener">Google Play</a></div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    function set(lang) {
+      root.setAttribute("data-lang", lang);
+      root.setAttribute("lang", lang);
+      document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.getAttribute("data-set-lang") === lang));
+      });
+      try { localStorage.setItem("kp-lang", lang); } catch (e) {}
+    }
+    var saved = null;
+    try { saved = localStorage.getItem("kp-lang"); } catch (e) {}
+    var nav = (navigator.language || "fi").slice(0, 2).toLowerCase();
+    set(saved || (nav === "fi" || nav === "sv" ? "fi" : "en"));
+    document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+      b.addEventListener("click", function () { set(b.getAttribute("data-set-lang")); });
+    });
+  })();
+</script>
 </body>
 </html>
